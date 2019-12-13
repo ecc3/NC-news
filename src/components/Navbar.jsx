@@ -28,6 +28,9 @@ class Navbar extends Component {
     const { topics, displayList } = this.state;
     return (
       <nav>
+        <Link to="/articles">
+          <button>Articles</button>
+        </Link>
         <button
           onClick={this.handleClick}
           // onMouseOver={this.handleShow}

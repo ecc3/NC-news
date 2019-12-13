@@ -13,6 +13,14 @@ class ArticlesList extends Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.topic !== this.props.topic) {
+      api.getAllArticles(this.props.topic).then(articles => {
+        this.setState({ articles });
+      });
+    }
+  }
+
   render() {
     const { articles } = this.state;
     return (
