@@ -13,9 +13,9 @@ exports.getTopics = () => {
     });
 };
 
-exports.getAllArticles = topic => {
+exports.getAllArticles = (topic, sort_by) => {
   return axios
-    .get(`${baseURL}/articles`, { params: { topic } })
+    .get(`${baseURL}/articles`, { params: { topic, sort_by } })
     .then(({ data }) => {
       return data.articles;
     })
