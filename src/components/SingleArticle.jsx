@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
 import Loader from "./Loader";
+import CommentsList from "./CommentsList";
 
 class SingleArticle extends Component {
   state = {
     article: null,
-    isLoading: true
+    isLoading: true,
+    commentsVisible: false
   };
 
   componentDidMount() {
@@ -14,8 +16,14 @@ class SingleArticle extends Component {
     });
   }
 
+  handleViewComments = () => {
+    this.setState(currentState => {
+      return { commentsVisible: !currentState.commentsVisible };
+    });
+  };
+
   render() {
-    const { article, isLoading } = this.state;
+    const { article, isLoading, commentsVisible } = this.state;
     if (isLoading) return <Loader />;
     const { title, body, votes, topic, author } = article;
     return (
@@ -26,6 +34,8 @@ class SingleArticle extends Component {
         <p>
           Votes: {votes}, Topic: {topic}
         </p>
+        <button onClick={this.handleViewComments}>Show/Hide Comments</button>
+        {commentsVisible && <CommentsList article_id={this.props.article_id} />}
       </div>
     );
   }
