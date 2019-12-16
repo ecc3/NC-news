@@ -28,8 +28,18 @@ exports.getSingleArticle = article_id => {
   return axios
     .get(`${baseURL}/articles/${article_id}`)
     .then(({ data }) => {
-      console.log(data);
       return data.article;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+exports.getAllComments = article_id => {
+  return axios
+    .get(`${baseURL}/articles/${article_id}/comments`)
+    .then(({ data }) => {
+      return data.comments;
     })
     .catch(err => {
       console.log(err);
