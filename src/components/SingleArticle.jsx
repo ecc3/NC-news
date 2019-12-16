@@ -7,6 +7,7 @@ import ErrDisplayer from "./ErrDisplayer";
 class SingleArticle extends Component {
   state = {
     article: {},
+    comments: [],
     isLoading: true,
     commentsVisible: false,
     err: ""
@@ -14,8 +15,11 @@ class SingleArticle extends Component {
 
   componentDidMount = async () => {
     try {
-      const article = await api.getSingleArticle(this.props.article_id);
-      this.setState({ article, isLoading: false });
+      const [article, comments] = await Promise.all([
+        api.getSingleArticle(this.props.article_id),
+        api.getAllComments(this.props.article_id)
+      ]);
+      this.setState({ article, comments, isLoading: false });
     } catch ({ response: { data } }) {
       this.setState({ err: data.msg, isLoading: false });
     }
@@ -28,7 +32,7 @@ class SingleArticle extends Component {
   };
 
   render() {
-    const { article, isLoading, commentsVisible, err } = this.state;
+    const { article, isLoading, commentsVisible, err, comments } = this.state;
     if (isLoading) return <Loader />;
     if (err) return <ErrDisplayer err={err} />;
     const { title, body, votes, topic, author } = article;
@@ -41,7 +45,12 @@ class SingleArticle extends Component {
           Votes: {votes}, Topic: {topic}
         </p>
         <button onClick={this.handleViewComments}>Show/Hide Comments</button>
-        {commentsVisible && <CommentsList article_id={this.props.article_id} />}
+        {commentsVisible && (
+          <CommentsList
+            comments={comments}
+            article_id={this.props.article_id}
+          />
+        )}
       </div>
     );
   }
