@@ -9,6 +9,7 @@ class ArticlesList extends Component {
     articles: [],
     isLoading: true,
     sort_by: "created_at",
+    order: "desc",
     err: ""
   };
 
@@ -24,12 +25,14 @@ class ArticlesList extends Component {
   componentDidUpdate = async (prevProps, prevState) => {
     if (
       prevProps.topic !== this.props.topic ||
-      prevState.sort_by !== this.state.sort_by
+      prevState.sort_by !== this.state.sort_by ||
+      prevState.order !== this.state.order
     ) {
       try {
         const articles = await api.getAllArticles(
           this.props.topic,
-          this.state.sort_by
+          this.state.sort_by,
+          this.state.order
         );
         this.setState({ articles });
       } catch ({ response: { data } }) {
@@ -38,8 +41,8 @@ class ArticlesList extends Component {
     }
   };
 
-  handleSelect = ({ target: { value } }) => {
-    this.setState({ sort_by: value });
+  handleSelect = ({ target }) => {
+    this.setState({ [target.name]: target.value });
   };
 
   render() {
@@ -48,12 +51,21 @@ class ArticlesList extends Component {
     if (err) return <ErrDisplayer err={err} />;
     return (
       <div>
-        <p>Sort by: </p>
-        <select name="" id="" onChange={this.handleSelect}>
-          <option value="created_at">Most recent</option>
-          <option value="comment_count">Most comments</option>
-          <option value="votes">Most popular</option>
-        </select>
+        <p>
+          Sort by:{" "}
+          <select name="sort_by" id="" onChange={this.handleSelect}>
+            <option value="created_at">Most recent</option>
+            <option value="comment_count">Most comments</option>
+            <option value="votes">Most popular</option>
+          </select>
+        </p>
+        <p>
+          Order:{" "}
+          <select name="order" id="" onChange={this.handleSelect}>
+            <option value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+          </select>
+        </p>
         {articles.map(article => {
           return <ArticleCard {...article} key={article.article_id} />;
         })}
