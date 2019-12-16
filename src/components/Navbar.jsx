@@ -2,18 +2,25 @@ import React, { Component } from "react";
 import { Link } from "@reach/router";
 import * as api from "../utils/api";
 import Loader from "./Loader";
+import ErrDisplayer from "./ErrDisplayer";
 
 class Navbar extends Component {
   state = {
     topics: [],
     displayList: false,
-    isLoading: true
+    isLoading: true,
+    err: ""
   };
 
   componentDidMount() {
-    api.getTopics().then(topics => {
-      this.setState({ topics, isLoading: false });
-    });
+    api
+      .getTopics()
+      .then(topics => {
+        this.setState({ topics, isLoading: false });
+      })
+      .catch(({ response: { data } }) => {
+        this.setState({ err: data.msg, isLoading: false });
+      });
   }
 
   handleClick = event => {
@@ -27,8 +34,9 @@ class Navbar extends Component {
   // };
 
   render() {
-    const { topics, displayList, isLoading } = this.state;
+    const { topics, displayList, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
+    if (err) return <ErrDisplayer err={err} />;
     return (
       <nav>
         <Link to="/articles">

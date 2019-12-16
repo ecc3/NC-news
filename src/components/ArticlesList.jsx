@@ -2,18 +2,25 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import ArticleCard from "./ArticleCard";
 import Loader from "./Loader";
+import ErrDisplayer from "./ErrDisplayer";
 
 class ArticlesList extends Component {
   state = {
     articles: [],
     isLoading: true,
-    sort_by: "created_at"
+    sort_by: "created_at",
+    err: ""
   };
 
   componentDidMount() {
-    api.getAllArticles(this.props.topic).then(articles => {
-      this.setState({ articles, isLoading: false });
-    });
+    api
+      .getAllArticles(this.props.topic)
+      .then(articles => {
+        this.setState({ articles, isLoading: false });
+      })
+      .catch(({ response: { data } }) => {
+        this.setState({ err: data.msg, isLoading: false });
+      });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -25,6 +32,9 @@ class ArticlesList extends Component {
         .getAllArticles(this.props.topic, this.state.sort_by)
         .then(articles => {
           this.setState({ articles });
+        })
+        .catch(({ response: { data } }) => {
+          this.setState({ err: data.msg, isLoading: false });
         });
     }
   }
@@ -34,8 +44,9 @@ class ArticlesList extends Component {
   };
 
   render() {
-    const { articles, isLoading } = this.state;
+    const { articles, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
+    if (err) return <ErrDisplayer err={err} />;
     return (
       <div>
         <p>Sort by: </p>

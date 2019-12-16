@@ -2,22 +2,30 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import Loader from "./Loader";
 import CommentCard from "./CommentCard";
+import ErrDisplayer from "./ErrDisplayer";
 
 class CommentsList extends Component {
   state = {
     comments: [],
-    isLoading: true
+    isLoading: true,
+    err: ""
   };
 
   componentDidMount() {
-    api.getAllComments(this.props.article_id).then(comments => {
-      this.setState({ comments, isLoading: false });
-    });
+    api
+      .getAllComments(this.props.article_id)
+      .then(comments => {
+        this.setState({ comments, isLoading: false });
+      })
+      .catch(({ response: { data } }) => {
+        this.setState({ err: data.msg, isLoading: false });
+      });
   }
 
   render() {
-    const { comments, isLoading } = this.state;
+    const { comments, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
+    if (err) return <ErrDisplayer err={err} />;
     return (
       <div>
         {comments.map(comment => {

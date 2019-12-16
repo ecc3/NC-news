@@ -2,18 +2,25 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import Loader from "./Loader";
 import CommentsList from "./CommentsList";
+import ErrDisplayer from "./ErrDisplayer";
 
 class SingleArticle extends Component {
   state = {
     article: null,
     isLoading: true,
-    commentsVisible: false
+    commentsVisible: false,
+    err: ""
   };
 
   componentDidMount() {
-    api.getSingleArticle(this.props.article_id).then(article => {
-      this.setState({ article, isLoading: false });
-    });
+    api
+      .getSingleArticle(this.props.article_id)
+      .then(article => {
+        this.setState({ article, isLoading: false });
+      })
+      .catch(({ response: { data } }) => {
+        this.setState({ err: data.msg, isLoading: false });
+      });
   }
 
   handleViewComments = () => {
@@ -23,8 +30,9 @@ class SingleArticle extends Component {
   };
 
   render() {
-    const { article, isLoading, commentsVisible } = this.state;
+    const { article, isLoading, commentsVisible, err } = this.state;
     if (isLoading) return <Loader />;
+    if (err) return <ErrDisplayer err={err} />;
     const { title, body, votes, topic, author } = article;
     return (
       <div>
