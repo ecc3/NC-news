@@ -37,6 +37,9 @@ class Navbar extends Component {
     if (err) return <ErrDisplayer err={err} />;
     return (
       <nav>
+        <Link to="/">
+          <button>Home</button>
+        </Link>
         <Link to="/articles">
           <button>Articles</button>
         </Link>
