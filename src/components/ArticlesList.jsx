@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
 import ArticleCard from "./ArticleCard";
+import Loader from "./Loader";
 
 class ArticlesList extends Component {
   state = {
-    articles: []
+    articles: [],
+    isLoading: true
   };
 
   componentDidMount() {
     api.getAllArticles().then(articles => {
-      this.setState({ articles });
+      this.setState({ articles, isLoading: false });
     });
   }
 
@@ -22,7 +24,8 @@ class ArticlesList extends Component {
   }
 
   render() {
-    const { articles } = this.state;
+    const { articles, isLoading } = this.state;
+    if (isLoading) return <Loader />;
     return (
       <div>
         {articles.map(article => {
