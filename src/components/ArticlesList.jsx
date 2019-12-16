@@ -12,32 +12,31 @@ class ArticlesList extends Component {
     err: ""
   };
 
-  componentDidMount() {
-    api
-      .getAllArticles(this.props.topic)
-      .then(articles => {
-        this.setState({ articles, isLoading: false });
-      })
-      .catch(({ response: { data } }) => {
-        this.setState({ err: data.msg, isLoading: false });
-      });
-  }
+  componentDidMount = async () => {
+    try {
+      const articles = await api.getAllArticles(this.props.topic);
+      this.setState({ articles, isLoading: false });
+    } catch ({ response: { data } }) {
+      this.setState({ err: data.msg, isLoading: false });
+    }
+  };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate = async (prevProps, prevState) => {
     if (
       prevProps.topic !== this.props.topic ||
       prevState.sort_by !== this.state.sort_by
     ) {
-      api
-        .getAllArticles(this.props.topic, this.state.sort_by)
-        .then(articles => {
-          this.setState({ articles });
-        })
-        .catch(({ response: { data } }) => {
-          this.setState({ err: data.msg, isLoading: false });
-        });
+      try {
+        const articles = await api.getAllArticles(
+          this.props.topic,
+          this.state.sort_by
+        );
+        this.setState({ articles });
+      } catch ({ response: { data } }) {
+        this.setState({ err: data.msg, isLoading: false });
+      }
     }
-  }
+  };
 
   handleSelect = ({ target: { value } }) => {
     this.setState({ sort_by: value });

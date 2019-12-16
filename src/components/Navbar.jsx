@@ -12,16 +12,14 @@ class Navbar extends Component {
     err: ""
   };
 
-  componentDidMount() {
-    api
-      .getTopics()
-      .then(topics => {
-        this.setState({ topics, isLoading: false });
-      })
-      .catch(({ response: { data } }) => {
-        this.setState({ err: data.msg, isLoading: false });
-      });
-  }
+  componentDidMount = async () => {
+    try {
+      const topics = await api.getTopics();
+      this.setState({ topics, isLoading: false });
+    } catch ({ response: { data } }) {
+      this.setState({ err: data.msg, isLoading: false });
+    }
+  };
 
   handleClick = event => {
     this.setState(currentState => {

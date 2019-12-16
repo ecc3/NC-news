@@ -6,22 +6,20 @@ import ErrDisplayer from "./ErrDisplayer";
 
 class SingleArticle extends Component {
   state = {
-    article: null,
+    article: {},
     isLoading: true,
     commentsVisible: false,
     err: ""
   };
 
-  componentDidMount() {
-    api
-      .getSingleArticle(this.props.article_id)
-      .then(article => {
-        this.setState({ article, isLoading: false });
-      })
-      .catch(({ response: { data } }) => {
-        this.setState({ err: data.msg, isLoading: false });
-      });
-  }
+  componentDidMount = async () => {
+    try {
+      const article = await api.getSingleArticle(this.props.article_id);
+      this.setState({ article, isLoading: false });
+    } catch ({ response: { data } }) {
+      this.setState({ err: data.msg, isLoading: false });
+    }
+  };
 
   handleViewComments = () => {
     this.setState(currentState => {

@@ -11,16 +11,14 @@ class CommentsList extends Component {
     err: ""
   };
 
-  componentDidMount() {
-    api
-      .getAllComments(this.props.article_id)
-      .then(comments => {
-        this.setState({ comments, isLoading: false });
-      })
-      .catch(({ response: { data } }) => {
-        this.setState({ err: data.msg, isLoading: false });
-      });
-  }
+  componentDidMount = async () => {
+    try {
+      const comments = await api.getAllComments(this.props.article_id);
+      this.setState({ comments, isLoading: false });
+    } catch ({ response: { data } }) {
+      this.setState({ err: data.msg, isLoading: false });
+    }
+  };
 
   render() {
     const { comments, isLoading, err } = this.state;
