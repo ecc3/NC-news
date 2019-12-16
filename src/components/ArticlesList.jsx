@@ -10,7 +10,7 @@ class ArticlesList extends Component {
   };
 
   componentDidMount() {
-    api.getAllArticles().then(articles => {
+    api.getAllArticles(this.props.topic).then(articles => {
       this.setState({ articles, isLoading: false });
     });
   }
