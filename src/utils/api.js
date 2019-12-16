@@ -24,3 +24,9 @@ export const getAllComments = async article_id => {
   const { data } = await request.get(`/articles/${article_id}/comments`);
   return data.comments;
 };
+
+export const getUserByUsername = async username => {
+  const { data } = await request.get(`/users/${username}`);
+  console.log(data);
+  return data.user;
+};
