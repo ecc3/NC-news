@@ -23,3 +23,15 @@ exports.getAllArticles = topic => {
       console.log(err);
     });
 };
+
+exports.getSingleArticle = article_id => {
+  return axios
+    .get(`${baseURL}/articles/${article_id}`)
+    .then(({ data }) => {
+      console.log(data);
+      return data.article;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};

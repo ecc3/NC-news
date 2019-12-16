@@ -9,15 +9,15 @@ class SingleArticle extends Component {
   };
 
   componentDidMount() {
-    api.getSingleArticle(this.props.id).then(article => {
+    api.getSingleArticle(this.props.article_id).then(article => {
       this.setState({ article, isLoading: false });
     });
   }
 
   render() {
     const { article, isLoading } = this.state;
-    const { title, body, votes, topic, author } = article;
     if (isLoading) return <Loader />;
+    const { title, body, votes, topic, author } = article;
     return (
       <div>
         <h2>{title}</h2>
