@@ -40,7 +40,10 @@ class SingleArticle extends Component {
         this.props.username,
         body
       );
-      this.setState({ comments: [comment, ...this.state.comments] });
+      this.setState({
+        comments: [comment, ...this.state.comments],
+        commentsVisible: true
+      });
     } catch ({ response: { data } }) {
       this.setState({ err: data.msg });
     }
@@ -49,10 +52,10 @@ class SingleArticle extends Component {
   render() {
     const { article, isLoading, commentsVisible, err, comments } = this.state;
     if (isLoading) return <Loader />;
-    if (err) return <ErrDisplayer err={err} />;
     const { title, body, votes, topic, author } = article;
     return (
       <div>
+        {err && <ErrDisplayer err={err} />}
         <h2>{title}</h2>
         <h5>Written by {author}</h5>
         <p>{body}</p>

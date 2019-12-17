@@ -36,9 +36,9 @@ class ArticlesList extends Component {
           this.state.sort_by,
           this.state.order
         );
-        this.setState({ articles, isLoading: false });
+        this.setState({ articles, isLoading: false, err: "" });
       } catch ({ response: { data } }) {
-        this.setState({ err: data.msg, isLoading: false, err: "" });
+        this.setState({ err: data.msg, isLoading: false });
       }
     }
   };
