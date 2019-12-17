@@ -32,13 +32,10 @@ class SelectUser extends Component {
     });
   };
 
-  handleSelect = ({ target: { value } }) => {
-    this.setState({ search: value }, () => {
-      this.props.filterByAuthor(this.state.search);
-    });
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.filterByAuthor(this.state.search);
   };
-
-  handleSubmit = event => {};
 
   render() {
     const { search, suggestions } = this.state;
@@ -46,19 +43,17 @@ class SelectUser extends Component {
       <form onSubmit={this.handleSubmit}>
         <input
           type="text"
+          list="userSuggestions"
           value={search}
           onChange={this.handleSearch}
           placeholder="Author"
         />
-        <select onChange={this.handleSelect}>
+        <datalist id="userSuggestions">
           {suggestions.map(suggestion => {
-            return (
-              <option value={suggestion} key={suggestion}>
-                {suggestion}
-              </option>
-            );
+            return <option value={suggestion} key={suggestion} />;
           })}
-        </select>
+        </datalist>
+        <input type="submit" />
       </form>
     );
   }
