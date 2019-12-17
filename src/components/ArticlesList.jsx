@@ -30,14 +30,15 @@ class ArticlesList extends Component {
       prevState.order !== this.state.order
     ) {
       try {
+        this.setState({ isLoading: true });
         const articles = await api.getAllArticles(
           this.props.topic,
           this.state.sort_by,
           this.state.order
         );
-        this.setState({ articles });
+        this.setState({ articles, isLoading: false });
       } catch ({ response: { data } }) {
-        this.setState({ err: data.msg, isLoading: false });
+        this.setState({ err: data.msg, isLoading: false, err: "" });
       }
     }
   };
@@ -47,18 +48,15 @@ class ArticlesList extends Component {
   };
 
   filterByAuthor = async username => {
-    console.log(username);
     try {
-      console.log("filtering");
+      this.setState({ isLoading: true });
       const articles = await api.getAllArticles(
         this.props.topic,
         this.state.sort_by,
         this.state.order,
         username
       );
-      this.setState({ articles }, () => {
-        console.log(this.state.articles);
-      });
+      this.setState({ articles, isLoading: false, err: "" });
     } catch ({ response: { data } }) {
       this.setState({ err: data.msg, isLoading: false });
     }
@@ -67,7 +65,6 @@ class ArticlesList extends Component {
   render() {
     const { articles, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
-    if (err) return <ErrDisplayer err={err} />;
     return (
       <div>
         <p>
@@ -87,9 +84,11 @@ class ArticlesList extends Component {
         </p>
         <p>Author: </p>
         <SelectUser filterByAuthor={this.filterByAuthor} />
-        {articles.map(article => {
-          return <ArticleCard {...article} key={article.article_id} />;
-        })}
+        {err && <ErrDisplayer err={err} />}
+        {!err &&
+          articles.map(article => {
+            return <ArticleCard {...article} key={article.article_id} />;
+          })}
       </div>
     );
   }
