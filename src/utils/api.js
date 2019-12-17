@@ -37,3 +37,7 @@ export const postNewComment = async (article_id, username, body) => {
   });
   return data.comment;
 };
+
+export const deleteComment = comment_id => {
+  request.delete(`/comments/${comment_id}`);
+};
