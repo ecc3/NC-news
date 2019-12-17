@@ -21,9 +21,9 @@ class Navbar extends Component {
     }
   };
 
-  handleClick = event => {
+  handleClick = ({ target: { name } }) => {
     this.setState(currentState => {
-      return { displayList: !currentState.displayList };
+      return { [name]: !currentState[name] };
     });
   };
 
@@ -44,6 +44,7 @@ class Navbar extends Component {
           <button>Articles</button>
         </Link>
         <button
+          name="displayList"
           onClick={this.handleClick}
           // onMouseOver={this.handleShow}
           // onMouseLeave={this.handleMouseLeave}
@@ -61,9 +62,9 @@ class Navbar extends Component {
             })}
           </ul>
         )}
-        <Link to="/login">
-          <button>Login</button>
-        </Link>
+        <button onClick={this.props.handleShowLogin} name="showLogin">
+          Login
+        </button>
       </nav>
     );
   }

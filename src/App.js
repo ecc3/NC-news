@@ -16,35 +16,36 @@ class App extends Component {
       avatar_url: "https://i.imgur.com/WfX0Neu.jpg",
       name: "Peter Messy"
     },
-    err: ""
+    showLogin: false
   };
 
   updateUser = async username => {
-    try {
-      const user = await api.getUserByUsername(username);
-      this.setState({ user });
-    } catch ({ response: { data } }) {
-      this.setState({ err: data.msg });
-    }
+    const user = await api.getUserByUsername(username);
+    this.setState({ user, showLogin: false });
+    return;
+  };
+
+  handleShowLogin = ({ target: { name } }) => {
+    this.setState(currentState => {
+      return { [name]: !currentState[name] };
+    });
   };
 
   render() {
-    const { err, user } = this.state;
-    if (err)
-      return (
-        <div>
-          <Header user={user} />
-          <ErrDisplayer err={err} />
-        </div>
-      );
+    const { user, showLogin } = this.state;
     return (
       <div className="App">
-        <Header user={user} />
+        <Header user={user} handleShowLogin={this.handleShowLogin} />
+        {showLogin && (
+          <SignIn
+            handleShowLogin={this.handleShowLogin}
+            updateUser={this.updateUser}
+          />
+        )}
         <Router>
           <Welcome path="/" />
           <ArticlesList path="/articles" />
           <ArticlesList path="/topics/:topic" />
-          <SignIn path="/login" updateUser={this.updateUser} />
           <SingleArticle
             path="/articles/:article_id"
             username={user.username}

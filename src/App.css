@@ -16,3 +16,28 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+#loginModal {
+  z-index: 2;
+  background-color: white;
+  float: center;
+  position: fixed;
+  height: 30vh;
+  width: 75vw;
+  border: solid;
+  border-color: #282c34;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
