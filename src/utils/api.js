@@ -27,6 +27,13 @@ export const getAllComments = async article_id => {
 
 export const getUserByUsername = async username => {
   const { data } = await request.get(`/users/${username}`);
-  console.log(data);
   return data.user;
+};
+
+export const postNewComment = async (article_id, username, body) => {
+  const { data } = await request.post(`/articles/${article_id}/comments`, {
+    username,
+    body
+  });
+  return data.comment;
 };
