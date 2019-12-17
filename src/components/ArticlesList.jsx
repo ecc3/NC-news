@@ -3,6 +3,7 @@ import * as api from "../utils/api";
 import ArticleCard from "./ArticleCard";
 import Loader from "./Loader";
 import ErrDisplayer from "./ErrDisplayer";
+import SelectUser from "./SelectUser";
 
 class ArticlesList extends Component {
   state = {
@@ -45,6 +46,24 @@ class ArticlesList extends Component {
     this.setState({ [target.name]: target.value });
   };
 
+  filterByAuthor = async username => {
+    console.log(username);
+    try {
+      console.log("filtering");
+      const articles = await api.getAllArticles(
+        this.props.topic,
+        this.state.sort_by,
+        this.state.order,
+        username
+      );
+      this.setState({ articles }, () => {
+        console.log(this.state.articles);
+      });
+    } catch ({ response: { data } }) {
+      this.setState({ err: data.msg, isLoading: false });
+    }
+  };
+
   render() {
     const { articles, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
@@ -66,6 +85,8 @@ class ArticlesList extends Component {
             <option value="asc">Ascending</option>
           </select>
         </p>
+        <p>Author: </p>
+        <SelectUser filterByAuthor={this.filterByAuthor} />
         {articles.map(article => {
           return <ArticleCard {...article} key={article.article_id} />;
         })}
