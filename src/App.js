@@ -46,7 +46,10 @@ class App extends Component {
           <ArticlesList path="/articles" />
           <ArticlesList path="/topics/:topic" />
           <SignIn path="/login" updateUser={this.updateUser} />
-          <SingleArticle path="/articles/:article_id" />
+          <SingleArticle
+            path="/articles/:article_id"
+            username={user.username}
+          />
           <ErrDisplayer default err="Page not found" />
         </Router>
       </div>

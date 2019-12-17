@@ -3,6 +3,7 @@ import * as api from "../utils/api";
 import Loader from "./Loader";
 import CommentsList from "./CommentsList";
 import ErrDisplayer from "./ErrDisplayer";
+import NewComment from "./NewComment";
 
 class SingleArticle extends Component {
   state = {
@@ -31,6 +32,15 @@ class SingleArticle extends Component {
     });
   };
 
+  commentUpload = async body => {
+    const comment = await api.postNewComment(
+      this.props.article_id,
+      this.props.username,
+      body
+    );
+    this.setState({ comments: [comment, ...this.state.comments] });
+  };
+
   render() {
     const { article, isLoading, commentsVisible, err, comments } = this.state;
     if (isLoading) return <Loader />;
@@ -44,11 +54,13 @@ class SingleArticle extends Component {
         <p>
           Votes: {votes}, Topic: {topic}
         </p>
+        <NewComment commentUpload={this.commentUpload} />
         <button onClick={this.handleViewComments}>Show/Hide Comments</button>
         {commentsVisible && (
           <CommentsList
             comments={comments}
             article_id={this.props.article_id}
+            username={this.props.username}
           />
         )}
       </div>
