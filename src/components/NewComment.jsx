@@ -1,21 +1,26 @@
 import React, { Component } from "react";
+import Loader from "./Loader";
 
 class NewComment extends Component {
   state = {
-    body: ""
+    body: "",
+    isLoading: false
   };
 
   handleBodySubmit = async event => {
     event.preventDefault();
+    this.setState({ isLoading: true });
     await this.props.commentUpload(this.state.body);
-    this.setState({ body: "" });
+    this.setState({ body: "", isLoading: false });
   };
 
-  handleBodyInput = event => {
-    this.setState({ body: event.target.value }, () => {});
+  handleBodyInput = ({ target: { value } }) => {
+    this.setState({ body: value });
   };
 
   render() {
+    const { body, isLoading } = this.state;
+    if (isLoading) return <Loader />;
     return (
       <div>
         <form onSubmit={this.handleBodySubmit}>
@@ -24,7 +29,7 @@ class NewComment extends Component {
             id=""
             cols="60"
             rows="5"
-            value={this.state.body}
+            value={body}
             onChange={this.handleBodyInput}
             required
           ></textarea>
