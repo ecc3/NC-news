@@ -20,12 +20,23 @@
 #loginModal {
   z-index: 2;
   background-color: white;
-  float: center;
   position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
   height: 30vh;
   width: 75vw;
-  border: solid;
-  border-color: #282c34;
+  border-radius: 4px;
+}
+
+.overlay {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(128, 128, 128, 0.5);
 }
 
 .close {

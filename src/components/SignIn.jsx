@@ -23,19 +23,21 @@ class SignIn extends Component {
   render() {
     const { username, err } = this.state;
     return (
-      <div id="loginModal">
-        <button
-          className="close"
-          name="showLogin"
-          onClick={this.props.handleShowLogin}
-        >
-          &times;
-        </button>
-        <form action="" onSubmit={this.handleSignIn}>
-          <input type="text" onChange={this.handleInput} value={username} />
-          <button>Login</button>
-        </form>
-        {err && <ErrDisplayer err={err} />}
+      <div className="overlay">
+        <div id="loginModal">
+          <button
+            className="close"
+            name="showLogin"
+            onClick={this.props.handleShowLogin}
+          >
+            &times;
+          </button>
+          <form action="" onSubmit={this.handleSignIn}>
+            <input type="text" onChange={this.handleInput} value={username} />
+            <button>Login</button>
+          </form>
+          {err && <ErrDisplayer err={err} />}
+        </div>
       </div>
     );
   }
