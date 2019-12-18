@@ -8,6 +8,8 @@ import Welcome from "./components/Welcome";
 import React, { Component } from "react";
 import * as api from "./utils/api";
 import SignIn from "./components/SignIn";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 class App extends Component {
   state = {
@@ -35,7 +37,8 @@ class App extends Component {
     const { user, showLogin } = this.state;
     return (
       <div className="App">
-        <Header user={user} handleShowLogin={this.handleShowLogin} />
+        <Navbar handleShowLogin={this.handleShowLogin} user={user} />
+        <Header />
         {showLogin && (
           <SignIn
             handleShowLogin={this.handleShowLogin}
@@ -52,6 +55,7 @@ class App extends Component {
           />
           <ErrDisplayer default err="Page not found" />
         </Router>
+        <Footer />
       </div>
     );
   }
