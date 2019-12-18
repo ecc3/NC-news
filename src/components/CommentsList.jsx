@@ -7,7 +7,11 @@ const CommentsList = props => {
       {props.comments.map(comment => {
         return (
           <div key={comment.comment_id}>
-            <CommentCard {...comment} username={props.username} />
+            <CommentCard
+              {...comment}
+              username={props.username}
+              updateCommentDeleted={props.updateCommentDeleted}
+            />
           </div>
         );
       })}

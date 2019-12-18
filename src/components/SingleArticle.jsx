@@ -12,6 +12,7 @@ class SingleArticle extends Component {
     comments: [],
     isLoading: true,
     commentsVisible: false,
+    commentDeleted: false,
     err: ""
   };
 
@@ -24,6 +25,17 @@ class SingleArticle extends Component {
       this.setState({ article, comments, isLoading: false });
     } catch ({ response: { data } }) {
       this.setState({ err: data.msg, isLoading: false });
+    }
+  };
+
+  componentDidUpdate = async () => {
+    if (this.state.commentDeleted && !this.state.commentsVisible) {
+      try {
+        const comments = await api.getAllComments(this.props.article_id);
+        this.setState({ comments, commentDeleted: false });
+      } catch ({ response: { data } }) {
+        this.setState({ err: data.msg });
+      }
     }
   };
 
@@ -49,6 +61,10 @@ class SingleArticle extends Component {
     }
   };
 
+  updateCommentDeleted = () => {
+    this.setState({ commentDeleted: true });
+  };
+
   render() {
     const { article, isLoading, commentsVisible, err, comments } = this.state;
     if (isLoading) return <Loader />;
@@ -68,6 +84,7 @@ class SingleArticle extends Component {
             comments={comments}
             article_id={this.props.article_id}
             username={this.props.username}
+            updateCommentDeleted={this.updateCommentDeleted}
           />
         )}
       </div>
