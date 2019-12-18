@@ -10,12 +10,15 @@ class Voter extends Component {
 
   handleClick = async ({ target: { name } }) => {
     try {
-      await api.patchVotes(this.props.type, this.props.id, name);
       this.setState(currentState => {
         return { optimisticVote: currentState.optimisticVote + +name };
       });
-    } catch ({ response: { data } }) {
-      this.setState({ err: data.msg });
+      await api.patchVotes(this.props.type, this.props.id, name);
+    } catch (error) {
+      this.setState({
+        err:
+          "Your vote could not be added. Please refresh the page and try again."
+      });
     }
   };
 

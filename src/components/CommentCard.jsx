@@ -14,8 +14,10 @@ class CommentCard extends Component {
       await api.deleteComment(this.props.comment_id);
       this.setState({ isDeleted: true });
       this.props.updateCommentDeleted();
-    } catch ({ response: { data } }) {
-      this.setState({ err: data.msg });
+    } catch (error) {
+      this.setState({
+        err: "Your comment could not be deleted. Please try again."
+      });
     }
   };
 
