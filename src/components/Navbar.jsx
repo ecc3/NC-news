@@ -27,9 +27,13 @@ class Navbar extends Component {
     });
   };
 
-  // handleMouseLeave = event => {
-  //   this.setState({ displayList: false });
-  // };
+  handleShow = event => {
+    this.setState({ displayList: true });
+  };
+
+  handleMouseLeave = event => {
+    this.setState({ displayList: false });
+  };
 
   render() {
     const { topics, displayList, isLoading, err } = this.state;
@@ -43,28 +47,33 @@ class Navbar extends Component {
         <Link to="/articles">
           <button>Articles</button>
         </Link>
-        <button
-          name="displayList"
-          onClick={this.handleClick}
-          // onMouseOver={this.handleShow}
-          // onMouseLeave={this.handleMouseLeave}
-        >
-          Topics
-        </button>
-        {displayList && (
-          <ul>
-            {topics.map(topic => {
-              return (
-                <Link to={`/topics/${topic.slug}`} key={topic.slug}>
-                  <li>{topic.slug}</li>
-                </Link>
-              );
-            })}
-          </ul>
-        )}
+        <div onMouseOver={this.handleShow} onMouseLeave={this.handleMouseLeave}>
+          <button name="displayList" onClick={this.handleClick}>
+            Topics
+          </button>
+          {displayList && (
+            <ul>
+              {topics.map(topic => {
+                return (
+                  <Link to={`/topics/${topic.slug}`} key={topic.slug}>
+                    <li>{topic.slug}</li>
+                  </Link>
+                );
+              })}
+            </ul>
+          )}
+        </div>
         <button onClick={this.props.handleShowLogin} name="showLogin">
           Login
         </button>
+        <div className="loggedIn">
+          <p>Hi {this.props.user.name.split(" ")[0]}</p>
+          <img
+            src={this.props.user.avatar_url}
+            alt="user's avatar"
+            id="userImage"
+          />
+        </div>
       </nav>
     );
   }

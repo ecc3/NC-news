@@ -1,14 +1,11 @@
 import React from "react";
-import Navbar from "./Navbar";
 
-const Header = props => {
+const Header = () => {
   return (
-    <div>
-      <h1>Welcome to NC News</h1>
-      <p>User: {props.user.name}</p>
-      <img src={props.user.avatar_url} alt="user's avatar" />
-      <Navbar handleShowLogin={props.handleShowLogin} />
-    </div>
+    <header>
+      <h1>NC News</h1>
+      <p>The home of news</p>
+    </header>
   );
 };
 

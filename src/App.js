@@ -45,16 +45,18 @@ class App extends Component {
             updateUser={this.updateUser}
           />
         )}
-        <Router>
-          <Welcome path="/" />
-          <ArticlesList path="/articles" />
-          <ArticlesList path="/topics/:topic" />
-          <SingleArticle
-            path="/articles/:article_id"
-            username={user.username}
-          />
-          <ErrDisplayer default err="Page not found" />
-        </Router>
+        <div className="router">
+          <Router>
+            <Welcome path="/" />
+            <ArticlesList path="/articles" />
+            <ArticlesList path="/topics/:topic" />
+            <SingleArticle
+              path="/articles/:article_id"
+              username={user.username}
+            />
+            <ErrDisplayer default err="Page not found" />
+          </Router>
+        </div>
         <Footer />
       </div>
     );
