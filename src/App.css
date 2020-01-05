@@ -1,6 +1,5 @@
 * {
   font-family: "Roboto", sans-serif;
-  /* border: 1px solid; */
 }
 
 .App {
@@ -8,7 +7,7 @@
   display: grid;
   grid-template-areas: "header" "router" "footer";
   grid-template-rows: 20vh 1fr 12vh;
-  background-color: #efe2ba;
+  background-color: white;
   min-height: 100vh;
 }
 
@@ -21,8 +20,13 @@ header {
   align-items: center;
   justify-content: space-around;
   font-size: calc(10px + 2vmin);
-  color: #efe2ba;
+  color: white;
   margin-top: 8vh;
+}
+
+#home-image {
+  max-height: 92vh;
+  max-width: 100%;
 }
 
 nav {
@@ -56,7 +60,7 @@ nav:on nav > * {
 
 .loggedIn > * {
   margin: 0px 10px;
-  color: #efe2ba;
+  color: #f13c20;
   max-height: 7vh;
 }
 
@@ -67,7 +71,7 @@ nav:on nav > * {
 
 #loginModal {
   z-index: 2;
-  background-color: #efe2ba;
+  background-color: white;
   position: fixed;
   top: 50vh;
   left: 50vw;
@@ -100,6 +104,8 @@ nav:on nav > * {
 
 .close {
   float: right;
+  font-size: 1.5rem;
+  margin-left: 3px;
 }
 
 .close:hover,
@@ -111,10 +117,23 @@ nav:on nav > * {
   background-color: #4056a1;
 }
 
+a,
+a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+a,
+button,
+select,
+input[type="submit"] {
+  cursor: pointer;
+}
+
 footer {
   grid-area: "footer";
   background-color: #f13c20;
-  color: #efe2ba;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,23 +144,26 @@ footer > * {
 }
 
 .route {
-  height: 100%;
+  min-height: 100%;
   display: grid;
   grid-template-columns: 15vw 1fr 15vw;
   grid-template-areas: ". content .";
-  background-color: #c5cbe3;
+  background-color: white;
 }
 
 .content {
   grid-area: content;
   background-color: white;
   padding: 10px 0px;
+  border-left: 3px solid #c5cbe3;
+  border-right: 3px solid #c5cbe3;
+  max-width: 900px;
 }
 
 .card {
   background-color: white;
   border-style: solid;
-  border-width: 1px 5px 5px 1px;
+  border-width: 1px 1px 5px 1px;
   border-color: #f13c20;
   margin: 20px;
   display: grid;
