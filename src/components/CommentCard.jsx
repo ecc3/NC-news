@@ -34,7 +34,7 @@ class CommentCard extends Component {
         <Voter type="comments" id={this.props.comment_id} votes={votes} />
         {author === username && (
           <Button primary onClick={this.handleDelete} className="deleteBtn">
-            Delete
+            <i class="fas fa-trash-alt"></i> Delete
           </Button>
         )}
       </div>
