@@ -28,11 +28,11 @@ class Navbar extends Component {
     });
   };
 
-  handleShow = event => {
+  handleShow = () => {
     this.setState({ displayList: true });
   };
 
-  handleMouseLeave = event => {
+  handleMouseLeave = () => {
     this.setState({ displayList: false });
   };
 

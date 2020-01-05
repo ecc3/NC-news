@@ -52,10 +52,7 @@ class ArticlesList extends Component {
   };
 
   handleSelect = ({ target }) => {
-    console.log(target.name);
-    this.setState({ [target.name]: target.value }, () => {
-      console.log(this.state);
-    });
+    this.setState({ [target.name]: target.value });
   };
 
   filterByAuthor = async username => {
@@ -71,6 +68,7 @@ class ArticlesList extends Component {
     } catch ({ response: { data } }) {
       this.setState({
         err: { msg: data.msg, type: "Search" },
+        username: "",
         isLoading: false
       });
     }

@@ -10,7 +10,7 @@ class CommentCard extends Component {
     err: ""
   };
 
-  handleDelete = async event => {
+  handleDelete = async () => {
     try {
       await api.deleteComment(this.props.comment_id);
       this.setState({ isDeleted: true });
