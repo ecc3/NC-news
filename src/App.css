@@ -260,6 +260,10 @@ h2 {
   color: #f13c20;
 }
 
+.arrow:disabled {
+  color: #f13c2065;
+}
+
 .singleArticle {
   padding: 10px 50px;
   display: flex;
