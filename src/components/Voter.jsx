@@ -8,7 +8,7 @@ class Voter extends Component {
     err: ""
   };
 
-  handleClick = async ({ target: { name } }) => {
+  handleClick = async ({ currentTarget: { name } }) => {
     try {
       this.setState(currentState => {
         return { optimisticVote: currentState.optimisticVote + +name };
