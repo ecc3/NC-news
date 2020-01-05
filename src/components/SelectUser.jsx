@@ -25,23 +25,23 @@ class SelectUser extends Component {
   handleSearch = event => {
     this.setState({ search: event.target.value }, () => {
       this.setState(currentState => {
-        const newSuggestions = currentState.users.filter(suggestion => {
+        const suggestions = currentState.users.filter(suggestion => {
           return suggestion.includes(currentState.search);
         });
-        return { suggestions: newSuggestions };
+        return { suggestions };
       });
     });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.filterByAuthor(this.state.search);
+    this.props.handleSelectedUser(this.state.search);
   };
 
   render() {
     const { search, suggestions } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} id="loginForm">
         <Input
           primary
           type="text"
@@ -55,7 +55,7 @@ class SelectUser extends Component {
             return <option value={suggestion} key={suggestion} />;
           })}
         </datalist>
-        <Input type="submit" />
+        <Input type="submit" className="button" />
       </form>
     );
   }

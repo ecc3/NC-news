@@ -1,29 +1,23 @@
 import React, { Component } from "react";
 import ErrDisplayer from "./ErrDisplayer";
 import SmallButton from "./SmallButton";
-import Input from "./Input";
+import SelectUser from "./SelectUser";
 
 class SignIn extends Component {
   state = {
-    username: "",
     err: ""
   };
 
-  handleSignIn = async event => {
-    event.preventDefault();
+  handleSignIn = async user => {
     try {
-      await this.props.updateUser(this.state.username);
+      await this.props.updateUser(user);
     } catch ({ response: { data } }) {
       this.setState({ err: data.msg });
     }
   };
 
-  handleInput = ({ target: { value } }) => {
-    this.setState({ username: value });
-  };
-
   render() {
-    const { username, err } = this.state;
+    const { err } = this.state;
     return (
       <div className="overlay">
         <div id="loginModal">
@@ -34,12 +28,7 @@ class SignIn extends Component {
           >
             &times;
           </SmallButton>
-          <form action="" onSubmit={this.handleSignIn} id="loginForm">
-            <Input type="text" onChange={this.handleInput} value={username} />
-            <SmallButton primary className="button">
-              Login
-            </SmallButton>
-          </form>
+          <SelectUser handleSelectedUser={this.handleSignIn} />
           {err && <ErrDisplayer err={err} />}
         </div>
       </div>

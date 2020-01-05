@@ -87,7 +87,7 @@ class ArticlesList extends Component {
             </p>
             <div>
               <p>Search By Author: </p>
-              <SelectUser filterByAuthor={this.filterByAuthor} />
+              <SelectUser handleSelectedUser={this.filterByAuthor} />
             </div>
           </div>
           {err && <ErrDisplayer err={err} />}
