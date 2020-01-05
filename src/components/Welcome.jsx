@@ -6,6 +6,7 @@ import ErrDisplayer from "./ErrDisplayer";
 class Welcome extends Component {
   state = {
     articles: [],
+    articleNum: 0,
     err: ""
   };
 
@@ -13,7 +14,8 @@ class Welcome extends Component {
     if (this.state.articles.length === 0) {
       try {
         const articles = await api.getAllArticles(undefined, "votes");
-        this.setState({ articles });
+        const articleNum = Math.floor(Math.random() * (articles.length - 2));
+        this.setState({ articles, articleNum });
       } catch ({ response: { data } }) {
         this.setState({ err: data.msg });
       }
@@ -21,7 +23,7 @@ class Welcome extends Component {
   };
 
   render() {
-    const { articles, err } = this.state;
+    const { articles, err, articleNum } = this.state;
     if (err)
       return (
         <div>
@@ -34,15 +36,9 @@ class Welcome extends Component {
       <div>
         <h3>Recommended for you:</h3>
         <div className="articlesContainer">
-          <ArticleCard
-            {...articles[Math.floor(Math.random() * articles.length)]}
-          />
-          <ArticleCard
-            {...articles[Math.floor(Math.random() * articles.length)]}
-          />
-          <ArticleCard
-            {...articles[Math.floor(Math.random() * articles.length)]}
-          />
+          <ArticleCard {...articles[articleNum]} />
+          <ArticleCard {...articles[articleNum + 2]} />
+          <ArticleCard {...articles[articleNum + 1]} />
         </div>
       </div>
     );
