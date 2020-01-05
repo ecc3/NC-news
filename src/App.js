@@ -22,9 +22,18 @@ class App extends Component {
     showLogin: false
   };
 
+  componentDidMount = () => {
+    if (localStorage.getItem("currentUser")) {
+      const parsedUser = JSON.parse(localStorage.getItem("currentUser"));
+      this.setState({ user: parsedUser });
+    }
+  };
+
   updateUser = async username => {
     const user = await api.getUserByUsername(username);
     this.setState({ user, showLogin: false });
+    const stringifiedUser = JSON.stringify(user);
+    localStorage.setItem("currentUser", stringifiedUser);
     return;
   };
 
