@@ -40,7 +40,6 @@ export const postNewComment = async (article_id, username, body) => {
 
 export const deleteComment = async comment_id => {
   await request.delete(`/comments/${comment_id}`);
-  return;
 };
 
 export const patchVotes = async (type, type_id, amount) => {
