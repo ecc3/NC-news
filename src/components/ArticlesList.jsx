@@ -5,10 +5,12 @@ import Loader from "./Loader";
 import ErrDisplayer from "./ErrDisplayer";
 import SelectUser from "./SelectUser";
 import Select from "./Select";
+import SmallButton from "./Button";
 
 class ArticlesList extends Component {
   state = {
     articles: [],
+    username: "",
     isLoading: true,
     sort_by: "created_at",
     order: "desc",
@@ -35,7 +37,8 @@ class ArticlesList extends Component {
         const articles = await api.getAllArticles(
           this.props.topic,
           this.state.sort_by,
-          this.state.order
+          this.state.order,
+          this.state.username
         );
         this.setState({ articles, isLoading: false, err: "" });
       } catch ({ response: { data } }) {
@@ -57,14 +60,14 @@ class ArticlesList extends Component {
         this.state.order,
         username
       );
-      this.setState({ articles, isLoading: false, err: "" });
+      this.setState({ articles, username, isLoading: false, err: "" });
     } catch ({ response: { data } }) {
       this.setState({ err: data.msg, isLoading: false });
     }
   };
 
   render() {
-    const { articles, isLoading, err } = this.state;
+    const { articles, isLoading, err, sort_by, order, username } = this.state;
     if (isLoading) return <Loader />;
     return (
       <div className="route">
@@ -72,15 +75,25 @@ class ArticlesList extends Component {
           <div className="filters">
             <p>
               Sort by:{" "}
-              <Select name="sort_by" id="" onChange={this.handleSelect}>
-                <option value="created_at">Most recent</option>
-                <option value="comment_count">Most comments</option>
-                <option value="votes">Most popular</option>
+              <Select
+                name="sort_by"
+                id=""
+                onChange={this.handleSelect}
+                value={sort_by}
+              >
+                <option value="created_at">Date posted</option>
+                <option value="comment_count">Comments</option>
+                <option value="votes">Popularity</option>
               </Select>
             </p>
             <p>
               Order:{" "}
-              <Select name="order" id="" onChange={this.handleSelect}>
+              <Select
+                name="order"
+                id=""
+                onChange={this.handleSelect}
+                value={order}
+              >
                 <option value="desc">Descending</option>
                 <option value="asc">Ascending</option>
               </Select>
@@ -90,6 +103,7 @@ class ArticlesList extends Component {
               <SelectUser handleSelectedUser={this.filterByAuthor} />
             </div>
           </div>
+          {username && <SmallButton>Articles by {username}</SmallButton>}
           {err && <ErrDisplayer err={err} />}
           {!err &&
             articles.map(article => {
