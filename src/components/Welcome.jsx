@@ -34,6 +34,11 @@ class Welcome extends Component {
       );
     return (
       <div>
+        <img
+          id="home-image"
+          src="images/home-image.jpg"
+          alt="grandmother and grandson talking in field with laptop"
+        />
         <h3>Recommended for you:</h3>
         <div className="articlesContainer">
           <ArticleCard {...articles[articleNum]} />
