@@ -5,7 +5,7 @@ import Loader from "./Loader";
 import ErrDisplayer from "./ErrDisplayer";
 import SelectUser from "./SelectUser";
 import Select from "./Select";
-import SmallButton from "./Button";
+import Button from "./Button";
 
 class ArticlesList extends Component {
   state = {
@@ -30,7 +30,8 @@ class ArticlesList extends Component {
     if (
       prevProps.topic !== this.props.topic ||
       prevState.sort_by !== this.state.sort_by ||
-      prevState.order !== this.state.order
+      prevState.order !== this.state.order ||
+      prevState.username !== this.state.username
     ) {
       try {
         this.setState({ isLoading: true });
@@ -48,7 +49,10 @@ class ArticlesList extends Component {
   };
 
   handleSelect = ({ target }) => {
-    this.setState({ [target.name]: target.value });
+    console.log(target.name);
+    this.setState({ [target.name]: target.value }, () => {
+      console.log(this.state);
+    });
   };
 
   filterByAuthor = async username => {
@@ -103,7 +107,17 @@ class ArticlesList extends Component {
               <SelectUser handleSelectedUser={this.filterByAuthor} />
             </div>
           </div>
-          {username && <SmallButton>Articles by {username}</SmallButton>}
+          {username && (
+            <Button
+              primary
+              onClick={this.handleSelect}
+              name="username"
+              value=""
+            >
+              <span id="close">&times;</span>
+              Articles by {username}
+            </Button>
+          )}
           {err && <ErrDisplayer err={err} />}
           {!err &&
             articles.map(article => {

@@ -41,7 +41,7 @@ class SelectUser extends Component {
   render() {
     const { search, suggestions } = this.state;
     return (
-      <form onSubmit={this.handleSubmit} id="loginForm">
+      <form onSubmit={this.handleSubmit}>
         <Input
           primary
           type="text"
