@@ -12,15 +12,21 @@ const ArticleCard = ({
   created_at
 }) => {
   return (
-    <div className="article">
-      <Link to={`/articles/${article_id}`}>
-        <h3>{title}</h3>
+    <div className="card">
+      <Link to={`/articles/${article_id}`} className="link">
+        <h2>{title}</h2>
       </Link>
-      <h4>{author}</h4>
-      <h4>{created_at}</h4>
+      <span className="metadata2">
+        <p>Comments: {comment_count}</p>
+        <p>Topic: {topic}</p>
+      </span>
+      <span className="metadata1">
+        <p>
+          Written by {author} and posted on {created_at}
+          {/* .slice(0, 10) */}
+        </p>
+      </span>
       <Voter type="articles" id={article_id} votes={votes} />
-      <p>Comments: {comment_count}</p>
-      <p>{topic}</p>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Link } from "@reach/router";
 import * as api from "../utils/api";
 import Loader from "./Loader";
 import ErrDisplayer from "./ErrDisplayer";
+import Button from "./Button";
 
 class Navbar extends Component {
   state = {
@@ -42,15 +43,37 @@ class Navbar extends Component {
     return (
       <nav>
         <Link to="/">
-          <button>Home</button>
-        </Link>
-        <Link to="/articles">
-          <button>Articles</button>
+          <Button primary classs="btn">
+            <i className="fa fa-home"></i> Home
+          </Button>
         </Link>
         <div onMouseOver={this.handleShow} onMouseLeave={this.handleMouseLeave}>
-          <button name="displayList" onClick={this.handleClick}>
+          <Button primary name="displayList" onClick={this.handleClick}>
+            Articles
+          </Button>
+          {displayList && (
+            <ul>
+              <li>
+                <Link to="/articles">View All</Link>
+              </li>
+              {topics.map(topic => {
+                return (
+                  <Link to={`/topics/${topic.slug}`} key={topic.slug}>
+                    <li>{topic.slug}</li>
+                  </Link>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+
+        {/* <Link to="/articles">
+          <Button primary>Articles</Button>
+        </Link>
+        <div onMouseOver={this.handleShow} onMouseLeave={this.handleMouseLeave}>
+          <Button primary name="displayList" onClick={this.handleClick}>
             Topics
-          </button>
+          </Button>
           {displayList && (
             <ul>
               {topics.map(topic => {
@@ -62,12 +85,14 @@ class Navbar extends Component {
               })}
             </ul>
           )}
-        </div>
-        <button onClick={this.props.handleShowLogin} name="showLogin">
-          Login
-        </button>
+        </div> */}
         <div className="loggedIn">
-          <p>Hi {this.props.user.name.split(" ")[0]}</p>
+          <Button onClick={this.props.handleShowLogin} name="showLogin">
+            Login
+          </Button>
+          <p>
+            <b>Hi {this.props.user.name.split(" ")[0]}</b>
+          </p>
           <img
             src={this.props.user.avatar_url}
             alt="user's avatar"

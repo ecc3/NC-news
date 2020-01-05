@@ -25,21 +25,23 @@ class Voter extends Component {
   render() {
     const { optimisticVote, err } = this.state;
     return (
-      <div>
-        <p>Votes: {this.props.votes + optimisticVote}</p>
+      <div className="voter">
         <button
+          className="arrow"
           onClick={this.handleClick}
           name="1"
           disabled={optimisticVote > 0}
         >
-          Up
+          <i className="fa fa-arrow-up"></i>
         </button>
+        <p>Votes: {this.props.votes + optimisticVote}</p>
         <button
+          className="arrow"
           onClick={this.handleClick}
           name="-1"
           disabled={optimisticVote < 0}
         >
-          Down
+          <i className="fa fa-arrow-down"></i>
         </button>
         {err && <ErrDisplayer err={err} />}
       </div>

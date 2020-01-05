@@ -32,17 +32,18 @@ class Welcome extends Component {
       );
     return (
       <div>
-        <h1>NC-news</h1>
-        <h3>Get all your news!</h3>
-        <ArticleCard
-          {...articles[Math.floor(Math.random() * articles.length)]}
-        />
-        <ArticleCard
-          {...articles[Math.floor(Math.random() * articles.length)]}
-        />
-        <ArticleCard
-          {...articles[Math.floor(Math.random() * articles.length)]}
-        />
+        <h3>Recommended for you:</h3>
+        <div className="articlesContainer">
+          <ArticleCard
+            {...articles[Math.floor(Math.random() * articles.length)]}
+          />
+          <ArticleCard
+            {...articles[Math.floor(Math.random() * articles.length)]}
+          />
+          <ArticleCard
+            {...articles[Math.floor(Math.random() * articles.length)]}
+          />
+        </div>
       </div>
     );
   }

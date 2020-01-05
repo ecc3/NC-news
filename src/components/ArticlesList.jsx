@@ -4,6 +4,7 @@ import ArticleCard from "./ArticleCard";
 import Loader from "./Loader";
 import ErrDisplayer from "./ErrDisplayer";
 import SelectUser from "./SelectUser";
+import Select from "./Select";
 
 class ArticlesList extends Component {
   state = {
@@ -66,29 +67,35 @@ class ArticlesList extends Component {
     const { articles, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
     return (
-      <div>
-        <p>
-          Sort by:{" "}
-          <select name="sort_by" id="" onChange={this.handleSelect}>
-            <option value="created_at">Most recent</option>
-            <option value="comment_count">Most comments</option>
-            <option value="votes">Most popular</option>
-          </select>
-        </p>
-        <p>
-          Order:{" "}
-          <select name="order" id="" onChange={this.handleSelect}>
-            <option value="desc">Descending</option>
-            <option value="asc">Ascending</option>
-          </select>
-        </p>
-        <p>Author: </p>
-        <SelectUser filterByAuthor={this.filterByAuthor} />
-        {err && <ErrDisplayer err={err} />}
-        {!err &&
-          articles.map(article => {
-            return <ArticleCard {...article} key={article.article_id} />;
-          })}
+      <div className="route">
+        <div className="content">
+          <div className="filters">
+            <p>
+              Sort by:{" "}
+              <Select name="sort_by" id="" onChange={this.handleSelect}>
+                <option value="created_at">Most recent</option>
+                <option value="comment_count">Most comments</option>
+                <option value="votes">Most popular</option>
+              </Select>
+            </p>
+            <p>
+              Order:{" "}
+              <Select name="order" id="" onChange={this.handleSelect}>
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+              </Select>
+            </p>
+            <div>
+              <p>Search By Author: </p>
+              <SelectUser filterByAuthor={this.filterByAuthor} />
+            </div>
+          </div>
+          {err && <ErrDisplayer err={err} />}
+          {!err &&
+            articles.map(article => {
+              return <ArticleCard {...article} key={article.article_id} />;
+            })}
+        </div>
       </div>
     );
   }

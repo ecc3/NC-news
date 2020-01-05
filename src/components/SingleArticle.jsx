@@ -5,6 +5,7 @@ import CommentsList from "./CommentsList";
 import ErrDisplayer from "./ErrDisplayer";
 import NewComment from "./NewComment";
 import Voter from "./Voter";
+import SmallButton from "./SmallButton";
 
 class SingleArticle extends Component {
   state = {
@@ -74,22 +75,27 @@ class SingleArticle extends Component {
     if (err) return <ErrDisplayer err={err} />;
     const { title, body, votes, topic, author } = article;
     return (
-      <div>
-        <h2>{title}</h2>
-        <h5>Written by {author}</h5>
-        <p>{body}</p>
-        <p>Topic: {topic}</p>
-        <Voter type="articles" id={this.props.article_id} votes={votes} />
-        <NewComment commentUpload={this.commentUpload} />
-        <button onClick={this.handleViewComments}>Show/Hide Comments</button>
-        {commentsVisible && (
-          <CommentsList
-            comments={comments}
-            article_id={this.props.article_id}
-            username={this.props.username}
-            updateCommentDeleted={this.updateCommentDeleted}
-          />
-        )}
+      <div className="route">
+        <div className="content singleArticle">
+          <h2>{title}</h2>
+          <h4>Written by {author}</h4>
+          <p>{body}</p>
+          <p>Topic: {topic}</p>
+          <Voter type="articles" id={this.props.article_id} votes={votes} />
+          <NewComment commentUpload={this.commentUpload} />
+          <SmallButton onClick={this.handleViewComments} className="toggle">
+            {commentsVisible && "Hide Comments"}
+            {!commentsVisible && "Show Comments"}
+          </SmallButton>
+          {commentsVisible && (
+            <CommentsList
+              comments={comments}
+              article_id={this.props.article_id}
+              username={this.props.username}
+              updateCommentDeleted={this.updateCommentDeleted}
+            />
+          )}
+        </div>
       </div>
     );
   }

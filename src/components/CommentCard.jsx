@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import Voter from "./Voter";
 import ErrDisplayer from "./ErrDisplayer";
+import Button from "./Button";
 
 class CommentCard extends Component {
   state = {
@@ -26,13 +27,15 @@ class CommentCard extends Component {
     const { isDeleted, err } = this.state;
     if (isDeleted) return <p>Your comment has been deleted.</p>;
     return (
-      <div>
+      <div className="comment">
         {err && <ErrDisplayer err={err} />}
-        <h5>{author}</h5>
-        <p>{body}</p>
+        <h4 className="author">{author}</h4>
+        <p className="articleBody">{body}</p>
         <Voter type="comments" id={this.props.comment_id} votes={votes} />
         {author === username && (
-          <button onClick={this.handleDelete}>Delete</button>
+          <Button primary onClick={this.handleDelete} className="deleteBtn">
+            Delete
+          </Button>
         )}
       </div>
     );

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Input from "./Input";
 
 class SelectUser extends Component {
   state = {
@@ -41,19 +42,20 @@ class SelectUser extends Component {
     const { search, suggestions } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
-        <input
+        <Input
+          primary
           type="text"
           list="userSuggestions"
           value={search}
           onChange={this.handleSearch}
-          placeholder="Author"
+          placeholder="Username"
         />
         <datalist id="userSuggestions">
           {suggestions.map(suggestion => {
             return <option value={suggestion} key={suggestion} />;
           })}
         </datalist>
-        <input type="submit" />
+        <Input type="submit" />
       </form>
     );
   }

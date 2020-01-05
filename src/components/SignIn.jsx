@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ErrDisplayer from "./ErrDisplayer";
+import SmallButton from "./SmallButton";
+import Input from "./Input";
 
 class SignIn extends Component {
   state = {
@@ -25,16 +27,18 @@ class SignIn extends Component {
     return (
       <div className="overlay">
         <div id="loginModal">
-          <button
+          <SmallButton
             className="close"
             name="showLogin"
             onClick={this.props.handleShowLogin}
           >
             &times;
-          </button>
-          <form action="" onSubmit={this.handleSignIn}>
-            <input type="text" onChange={this.handleInput} value={username} />
-            <button>Login</button>
+          </SmallButton>
+          <form action="" onSubmit={this.handleSignIn} id="loginForm">
+            <Input type="text" onChange={this.handleInput} value={username} />
+            <SmallButton primary className="button">
+              Login
+            </SmallButton>
           </form>
           {err && <ErrDisplayer err={err} />}
         </div>

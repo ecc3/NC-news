@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Loader from "./Loader";
+import SmallButton from "./SmallButton";
 
 class NewComment extends Component {
   state = {
@@ -22,18 +23,18 @@ class NewComment extends Component {
     const { body, isLoading } = this.state;
     if (isLoading) return <Loader />;
     return (
-      <div>
-        <form onSubmit={this.handleBodySubmit}>
+      <div id="newComment">
+        <form onSubmit={this.handleBodySubmit} id="commentForm">
           <textarea
             name="body"
-            id=""
-            cols="60"
-            rows="5"
+            id="textarea"
             value={body}
             onChange={this.handleBodyInput}
             required
           ></textarea>
-          <button>Submit</button>
+          <SmallButton primary className="submit">
+            Submit
+          </SmallButton>
         </form>
       </div>
     );
