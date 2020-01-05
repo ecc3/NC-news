@@ -14,7 +14,8 @@ class ArticlesList extends Component {
     isLoading: true,
     sort_by: "created_at",
     order: "desc",
-    err: { msg: "", type: "" }
+    searchErr: "",
+    loadErr: ""
   };
 
   componentDidMount = async () => {
@@ -22,7 +23,7 @@ class ArticlesList extends Component {
       const articles = await api.getAllArticles(this.props.topic);
       this.setState({ articles, isLoading: false });
     } catch ({ response: { data } }) {
-      this.setState({ err: { msg: data.msg, type: "Page" }, isLoading: false });
+      this.setState({ loadErr: "Page not foudn", isLoading: false });
     }
   };
 
@@ -44,15 +45,15 @@ class ArticlesList extends Component {
         this.setState({ articles, isLoading: false, err: "" });
       } catch ({ response: { data } }) {
         this.setState({
-          err: { msg: data.msg, type: "Search" },
+          searchErr: "Search not found",
           isLoading: false
         });
       }
     }
   };
 
-  handleSelect = ({ target }) => {
-    this.setState({ [target.name]: target.value });
+  handleSelect = ({ currentTarget }) => {
+    this.setState({ [currentTarget.name]: currentTarget.value });
   };
 
   filterByAuthor = async username => {
@@ -67,7 +68,7 @@ class ArticlesList extends Component {
       this.setState({ articles, username, isLoading: false, err: "" });
     } catch ({ response: { data } }) {
       this.setState({
-        err: { msg: data.msg, type: "Search" },
+        searchErr: "Search not found",
         username: "",
         isLoading: false
       });
@@ -75,9 +76,16 @@ class ArticlesList extends Component {
   };
 
   render() {
-    const { articles, isLoading, err, sort_by, order, username } = this.state;
-    if (err.type === "Page")
-      return <ErrDisplayer err={`${err.type} not found`} />;
+    const {
+      articles,
+      isLoading,
+      searchErr,
+      loadErr,
+      sort_by,
+      order,
+      username
+    } = this.state;
+    if (loadErr) return <ErrDisplayer err={loadErr} />;
     return (
       <div className="route">
         <div className="content">
@@ -119,13 +127,13 @@ class ArticlesList extends Component {
               name="username"
               value=""
             >
-              <span id="close">&times;</span>
+              <span className="close">&times;</span>
               Articles by {username}
             </Button>
           )}
-          {err && <ErrDisplayer err={`${err.type} not found`} />}
+          {searchErr && <ErrDisplayer err={searchErr} />}
           {isLoading && <Loader />}
-          {!err &&
+          {!searchErr &&
             !isLoading &&
             articles.map(article => {
               return <ArticleCard {...article} key={article.article_id} />;
