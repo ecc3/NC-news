@@ -14,7 +14,7 @@ class ArticlesList extends Component {
     isLoading: true,
     sort_by: "created_at",
     order: "desc",
-    err: ""
+    err: { msg: "", type: "" }
   };
 
   componentDidMount = async () => {
@@ -22,7 +22,7 @@ class ArticlesList extends Component {
       const articles = await api.getAllArticles(this.props.topic);
       this.setState({ articles, isLoading: false });
     } catch ({ response: { data } }) {
-      this.setState({ err: data.msg, isLoading: false });
+      this.setState({ err: { msg: data.msg, type: "Page" }, isLoading: false });
     }
   };
 
@@ -43,7 +43,10 @@ class ArticlesList extends Component {
         );
         this.setState({ articles, isLoading: false, err: "" });
       } catch ({ response: { data } }) {
-        this.setState({ err: data.msg, isLoading: false });
+        this.setState({
+          err: { msg: data.msg, type: "Search" },
+          isLoading: false
+        });
       }
     }
   };
@@ -66,12 +69,17 @@ class ArticlesList extends Component {
       );
       this.setState({ articles, username, isLoading: false, err: "" });
     } catch ({ response: { data } }) {
-      this.setState({ err: data.msg, isLoading: false });
+      this.setState({
+        err: { msg: data.msg, type: "Search" },
+        isLoading: false
+      });
     }
   };
 
   render() {
     const { articles, isLoading, err, sort_by, order, username } = this.state;
+    if (err.type === "Page")
+      return <ErrDisplayer err={`${err.type} not found`} />;
     return (
       <div className="route">
         <div className="content">
@@ -117,7 +125,7 @@ class ArticlesList extends Component {
               Articles by {username}
             </Button>
           )}
-          {err && <ErrDisplayer err={err} />}
+          {err && <ErrDisplayer err={`${err.type} not found`} />}
           {isLoading && <Loader />}
           {!err &&
             !isLoading &&
