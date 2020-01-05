@@ -1,9 +1,10 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import React from "react";
+import Button from "./Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Link } from "@reach/router";
 
-export default function SimpleMenu() {
+export default function DropDownMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = event => {
@@ -16,7 +17,12 @@ export default function SimpleMenu() {
 
   return (
     <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+      <Button
+        primary
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
         Articles
       </Button>
       <Menu
@@ -26,16 +32,16 @@ export default function SimpleMenu() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <Link to="/articles"><MenuItem onClick={handleClose}>View All</MenuItem></Link>
-        {topics.map(topic => {
+        <Link to="/articles">
+          <MenuItem onClick={handleClose}>all topics</MenuItem>
+        </Link>
+        {props.topics.map(topic => {
           return (
-            <MenuItem <Link to={`/topics/${topic.slug}`} key={topic.slug}>
-              <li>{topic.slug}</li>
+            <Link to={`/topics/${topic.slug}`} key={topic.slug}>
+              <MenuItem onClick={handleClose}>{topic.slug}</MenuItem>
             </Link>
           );
         })}
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
     </div>
   );

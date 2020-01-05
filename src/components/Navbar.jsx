@@ -4,11 +4,11 @@ import * as api from "../utils/api";
 import Loader from "./Loader";
 import ErrDisplayer from "./ErrDisplayer";
 import Button from "./Button";
+import DropDownMenu from "./DropDownMenu";
 
 class Navbar extends Component {
   state = {
     topics: [],
-    displayList: false,
     isLoading: true,
     err: ""
   };
@@ -22,72 +22,20 @@ class Navbar extends Component {
     }
   };
 
-  handleClick = ({ target: { name } }) => {
-    this.setState(currentState => {
-      return { [name]: !currentState[name] };
-    });
-  };
-
-  handleShow = () => {
-    this.setState({ displayList: true });
-  };
-
-  handleMouseLeave = () => {
-    this.setState({ displayList: false });
-  };
-
   render() {
-    const { topics, displayList, isLoading, err } = this.state;
+    const { topics, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
     if (err) return <ErrDisplayer err={err} />;
     return (
       <nav>
         <Link to="/">
-          <Button primary classs="btn">
+          <Button primary className="btn">
             <i className="fa fa-home"></i> Home
           </Button>
         </Link>
-        <div onMouseOver={this.handleShow} onMouseLeave={this.handleMouseLeave}>
-          <Button primary name="displayList" onClick={this.handleClick}>
-            Articles
-          </Button>
-          {displayList && (
-            <ul>
-              <li>
-                <Link to="/articles">View All</Link>
-              </li>
-              {topics.map(topic => {
-                return (
-                  <Link to={`/topics/${topic.slug}`} key={topic.slug}>
-                    <li>{topic.slug}</li>
-                  </Link>
-                );
-              })}
-            </ul>
-          )}
-        </div>
-
-        {/* <Link to="/articles">
-          <Button primary>Articles</Button>
-        </Link>
-        <div onMouseOver={this.handleShow} onMouseLeave={this.handleMouseLeave}>
-          <Button primary name="displayList" onClick={this.handleClick}>
-            Topics
-          </Button>
-          {displayList && (
-            <ul>
-              {topics.map(topic => {
-                return (
-                  <Link to={`/topics/${topic.slug}`} key={topic.slug}>
-                    <li>{topic.slug}</li>
-                  </Link>
-                );
-              })}
-            </ul>
-          )}
-        </div> */}
+        <DropDownMenu topics={topics} />
         <div className="loggedIn">
-          <Button onClick={this.props.handleShowLogin} name="showLogin">
+          <Button primary onClick={this.props.handleShowLogin} name="showLogin">
             Login
           </Button>
           <p>
