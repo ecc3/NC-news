@@ -72,7 +72,6 @@ class ArticlesList extends Component {
 
   render() {
     const { articles, isLoading, err, sort_by, order, username } = this.state;
-    if (isLoading) return <Loader />;
     return (
       <div className="route">
         <div className="content">
@@ -119,7 +118,9 @@ class ArticlesList extends Component {
             </Button>
           )}
           {err && <ErrDisplayer err={err} />}
+          {isLoading && <Loader />}
           {!err &&
+            !isLoading &&
             articles.map(article => {
               return <ArticleCard {...article} key={article.article_id} />;
             })}
