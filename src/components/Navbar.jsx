@@ -63,7 +63,7 @@ class Navbar extends Component {
             <i class="fas fa-bars" id="burger"></i>
           </Button>
           {displayMenu && (
-            <div id="displayMenu">
+            <div id="displayMenu" onClick={this.handleMenuDisplay}>
               <Link to="/articles" className="mobSpan">
                 all topics
               </Link>
@@ -85,14 +85,6 @@ class Navbar extends Component {
               >
                 login
               </a>
-              {/* <Button
-                className="mobSpan"
-                primary
-                onClick={this.props.handleShowLogin}
-                name="showLogin"
-              >
-                Login
-              </Button> */}
             </div>
           )}
         </nav>
