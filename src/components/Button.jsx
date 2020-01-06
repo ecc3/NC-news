@@ -9,7 +9,7 @@ const Button = styled.button`
   display: inline-block;
   padding: 0.5rem 0.5rem;
   margin: 0rem;
-  min-width: 100px;
+  min-width: fit-content;
   max-width: 200px;
   border: none;
   font-family: "Roboto", sans-serif;

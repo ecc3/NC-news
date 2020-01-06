@@ -10,8 +10,14 @@ class Navbar extends Component {
   state = {
     topics: [],
     isLoading: true,
+    width: window.innerWidth,
+    displayMenu: false,
     err: ""
   };
+
+  componentWillMount() {
+    window.addEventListener("resize", this.handleWindowSizeChange);
+  }
 
   componentDidMount = async () => {
     try {
@@ -22,14 +28,76 @@ class Navbar extends Component {
     }
   };
 
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
+  handleMenuDisplay = () => {
+    this.setState(currentState => {
+      return { displayMenu: !currentState.displayMenu };
+    });
+  };
+
   render() {
-    const { topics, isLoading, err } = this.state;
+    const { topics, isLoading, err, width, displayMenu } = this.state;
     if (isLoading) return <Loader />;
+    if (width < 500) {
+      console.log(width, "less that 400");
+      return (
+        <nav>
+          <Link to="/">
+            <Button primary>
+              <i className="fa fa-home"></i> Home
+            </Button>
+          </Link>
+          <Button primary onClick={this.handleMenuDisplay}>
+            <p id="hi">Hi {this.props.user.name.split(" ")[0]}</p>
+            <i class="fas fa-bars" id="burger"></i>
+          </Button>
+          {displayMenu && (
+            <div id="displayMenu">
+              <Link to="/articles" className="mobSpan">
+                all topics
+              </Link>
+              {topics.map(topic => {
+                return (
+                  <Link
+                    to={`/topics/${topic.slug}`}
+                    key={topic.slug}
+                    className="mobSpan"
+                  >
+                    {topic.slug}
+                  </Link>
+                );
+              })}
+              <a
+                className="mobSpan"
+                onClick={this.props.handleShowLogin}
+                name="showLogin"
+              >
+                login
+              </a>
+              {/* <Button
+                className="mobSpan"
+                primary
+                onClick={this.props.handleShowLogin}
+                name="showLogin"
+              >
+                Login
+              </Button> */}
+            </div>
+          )}
+        </nav>
+      );
+    }
     if (err) return <ErrDisplayer err={err} />;
     return (
       <nav>
         <Link to="/">
-          <Button primary className="btn">
+          <Button primary>
             <i className="fa fa-home"></i> Home
           </Button>
         </Link>
@@ -38,9 +106,7 @@ class Navbar extends Component {
           <Button primary onClick={this.props.handleShowLogin} name="showLogin">
             Login
           </Button>
-          <p>
-            <b>Hi {this.props.user.name.split(" ")[0]}</b>
-          </p>
+          <p>Hi {this.props.user.name.split(" ")[0]}</p>
           <img
             src={this.props.user.avatar_url}
             alt="user's avatar"

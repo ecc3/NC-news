@@ -42,11 +42,10 @@ nav {
   align-content: center;
 }
 
-nav:on nav > * {
+nav > * {
   margin: 0px;
   flex-shrink: 1;
-  flex-grow: 1;
-  flex-basis: 75px;
+  flex-basis: 100px;
   min-width: 50px;
   max-height: 8vh;
 }
@@ -59,7 +58,9 @@ nav:on nav > * {
 }
 
 .loggedIn > * {
-  margin: 0px 10px;
+  flex-shrink: 1;
+  font-weight: bold;
+  margin: 0px 0.5rem;
   color: #f13c20;
   max-height: 7vh;
 }
@@ -179,7 +180,7 @@ footer > * {
   width: calc(100vw - 30vw - 48px);
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
   .route {
     grid-template-columns: 7.5vw 1fr 7.5vw;
   }
@@ -189,6 +190,9 @@ footer > * {
   }
   .content {
     border: none;
+  }
+  nav {
+    justify-content: space-between;
   }
 }
 
@@ -365,4 +369,39 @@ h2 {
 
 #close:hover {
   color: #f13c20;
+}
+
+#burger {
+  float: right;
+  margin: 0 10px;
+}
+
+#displayMenu {
+  position: absolute;
+  top: calc(8vh + 2px);
+  width: 100vw;
+  background-color: #4056a1;
+  display: flex;
+  height: 30vh;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.mobSpan {
+  font-weight: bold;
+  color: white;
+  height: 5vh;
+  display: block;
+  width: 100vw;
+  background-color: #4056a1;
+  text-align: right;
+  padding: 18px 18px;
+}
+
+.mobSpan:visited {
+  color: white;
+}
+
+#hi {
+  display: inline;
 }
