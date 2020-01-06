@@ -194,6 +194,35 @@ footer > * {
   nav {
     justify-content: space-between;
   }
+  #mobSingleArticle {
+    padding: 10px 0px;
+  }
+  #mobComment {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto auto;
+    grid-template-areas:
+      "author buttons"
+      "body body"
+      "delete .";
+  }
+  #mobComment > .articleBody {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    padding: 0px;
+  }
+
+  #mobComment > .deleteBtn {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    margin: 10px 0px 0px 0px;
+    max-height: 35px;
+    max-width: fit-content;
+  }
 }
 
 .link {
@@ -272,7 +301,7 @@ h2 {
 .comment {
   background-color: white;
   border-style: solid;
-  border-width: 1px 5px 5px 1px;
+  border-width: 1px 1px 5px 1px;
   border-color: #f13c20;
   margin: 20px;
   display: grid;
@@ -284,6 +313,8 @@ h2 {
     "delete body";
   padding: 10px;
   max-width: 80vw;
+  align-items: center;
+  justify-content: center;
 }
 
 .comment > * {
@@ -340,6 +371,7 @@ h2 {
 
 .submit {
   align-self: flex-end;
+  font-weight: bold;
 }
 
 #textarea {

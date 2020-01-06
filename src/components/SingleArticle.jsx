@@ -76,7 +76,7 @@ class SingleArticle extends Component {
     const { title, body, votes, topic, author } = article;
     return (
       <div className="route">
-        <div className="content singleArticle">
+        <div className="content singleArticle" id="mobSingleArticle">
           <h2>{title}</h2>
           <h4>Written by {author}</h4>
           <p>{body}</p>

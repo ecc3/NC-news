@@ -27,7 +27,7 @@ class CommentCard extends Component {
     const { isDeleted, err } = this.state;
     if (isDeleted) return <p>Your comment has been deleted.</p>;
     return (
-      <div className="comment">
+      <div className="comment" id="mobComment">
         {err && <ErrDisplayer err={err} />}
         <h4 className="author">{author}</h4>
         <p className="articleBody">{body}</p>
