@@ -10,7 +10,7 @@ import * as api from "./utils/api";
 import SignIn from "./components/SignIn";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-//import { createMuiTheme } from "@material-ui/core/styles";
+import Loader from "./components/Loader";
 
 class App extends Component {
   state = {
@@ -19,7 +19,9 @@ class App extends Component {
       avatar_url: "https://i.imgur.com/WfX0Neu.jpg",
       name: "Peter Messy"
     },
-    showLogin: false
+    showLogin: false,
+    welcomeIsLoading: true,
+    navbarIsLoading: true
   };
 
   componentDidMount = () => {
@@ -43,11 +45,20 @@ class App extends Component {
     });
   };
 
+  hasLoaded = component => {
+    this.setState({ [`${component}IsLoading`]: false });
+  };
+
   render() {
-    const { user, showLogin } = this.state;
+    const { user, showLogin, welcomeIsLoading, navbarIsLoading } = this.state;
     return (
       <div className="App">
-        <Navbar handleShowLogin={this.handleShowLogin} user={user} />
+        <Navbar
+          handleShowLogin={this.handleShowLogin}
+          user={user}
+          hasLoaded={this.hasLoaded}
+        />
+        {(navbarIsLoading || welcomeIsLoading) && <Loader />}
         <Header />
         {showLogin && (
           <SignIn
@@ -57,7 +68,7 @@ class App extends Component {
         )}
         <div className="router">
           <Router>
-            <Welcome path="/" />
+            <Welcome path="/" hasLoaded={this.hasLoaded} />
             <ArticlesList path="/articles" />
             <ArticlesList path="/topics/:topic" />
             <SingleArticle

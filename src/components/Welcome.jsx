@@ -7,6 +7,7 @@ class Welcome extends Component {
   state = {
     articles: [],
     articleNum: 0,
+    isLoading: true,
     err: ""
   };
 
@@ -15,15 +16,22 @@ class Welcome extends Component {
       try {
         const articles = await api.getAllArticles(undefined, "votes");
         const articleNum = Math.floor(Math.random() * (articles.length - 2));
-        this.setState({ articles, articleNum });
+        this.setState({ articles, articleNum, isLoading: false });
       } catch ({ response: { data } }) {
         this.setState({ err: data.msg });
       }
     }
   };
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.isLoading !== this.state.isLoading) {
+      this.props.hasLoaded("welcome");
+    }
+  };
+
   render() {
-    const { articles, err, articleNum } = this.state;
+    const { articles, err, articleNum, isLoading } = this.state;
+    if (isLoading) return <section className="loading"></section>;
     if (err)
       return (
         <div>

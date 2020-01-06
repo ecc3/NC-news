@@ -1,9 +1,11 @@
 import React from "react";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const Loader = () => {
   return (
-    <div>
+    <div className="loader">
       <h2>LOADING</h2>
+      <PulseLoader color={"#4056a1"} />
     </div>
   );
 };

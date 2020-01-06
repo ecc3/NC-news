@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
 import * as api from "../utils/api";
-import Loader from "./Loader";
 import ErrDisplayer from "./ErrDisplayer";
 import Button from "./Button";
 import DropDownMenu from "./DropDownMenu";
@@ -9,9 +8,9 @@ import DropDownMenu from "./DropDownMenu";
 class Navbar extends Component {
   state = {
     topics: [],
-    isLoading: true,
     width: window.innerWidth,
     displayMenu: false,
+    isLoading: true,
     err: ""
   };
 
@@ -25,6 +24,12 @@ class Navbar extends Component {
       this.setState({ topics, isLoading: false });
     } catch ({ response: { data } }) {
       this.setState({ err: data.msg, isLoading: false });
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.isLoading !== this.state.isLoading) {
+      this.props.hasLoaded("navbar");
     }
   };
 
@@ -43,7 +48,7 @@ class Navbar extends Component {
 
   render() {
     const { topics, isLoading, err, width, displayMenu } = this.state;
-    if (isLoading) return <Loader />;
+    if (isLoading) return <section className="loading"></section>;
     if (width < 500) {
       console.log(width, "less that 400");
       return (

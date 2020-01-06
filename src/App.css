@@ -22,6 +22,14 @@ header {
   font-size: calc(10px + 2vmin);
   color: white;
   margin-top: 8vh;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.App > .loader {
+  grid-area: "header";
+  grid-row-start: 2;
+  grid-row-end: 3;
 }
 
 #home-image {
@@ -436,4 +444,8 @@ h2 {
 
 #hi {
   display: inline;
+}
+
+.loading {
+  height: 10px;
 }
