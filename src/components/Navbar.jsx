@@ -14,12 +14,9 @@ class Navbar extends Component {
     err: ""
   };
 
-  componentWillMount() {
-    window.addEventListener("resize", this.handleWindowSizeChange);
-  }
-
   componentDidMount = async () => {
     try {
+      window.addEventListener("resize", this.handleWindowSizeChange);
       const topics = await api.getTopics();
       this.setState({ topics, isLoading: false });
     } catch ({ response: { data } }) {
@@ -50,7 +47,6 @@ class Navbar extends Component {
     const { topics, isLoading, err, width, displayMenu } = this.state;
     if (isLoading) return <section className="loading"></section>;
     if (width < 500) {
-      console.log(width, "less that 400");
       return (
         <nav>
           <Link to="/">
@@ -60,7 +56,7 @@ class Navbar extends Component {
           </Link>
           <Button primary onClick={this.handleMenuDisplay}>
             <p id="hi">Hi {this.props.user.name.split(" ")[0]}</p>
-            <i class="fas fa-bars" id="burger"></i>
+            <i className="fas fa-bars" id="burger"></i>
           </Button>
           {displayMenu && (
             <div id="displayMenu" onClick={this.handleMenuDisplay}>

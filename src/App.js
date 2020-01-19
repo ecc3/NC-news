@@ -20,11 +20,12 @@ class App extends Component {
       name: "Peter Messy"
     },
     showLogin: false,
-    welcomeIsLoading: true,
+    welcomeIsLoading: false,
     navbarIsLoading: true
   };
 
   componentDidMount = () => {
+    console.log(this.props, "app props");
     if (localStorage.getItem("currentUser")) {
       const parsedUser = JSON.parse(localStorage.getItem("currentUser"));
       this.setState({ user: parsedUser });
@@ -45,8 +46,9 @@ class App extends Component {
     });
   };
 
-  hasLoaded = component => {
-    this.setState({ [`${component}IsLoading`]: false });
+  hasLoaded = (component, bool = false) => {
+    console.log(`${component} has loaded`);
+    this.setState({ [`${component}IsLoading`]: bool });
   };
 
   render() {

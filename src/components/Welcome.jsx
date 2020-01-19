@@ -12,6 +12,7 @@ class Welcome extends Component {
   };
 
   componentDidMount = async () => {
+    this.props.hasLoaded("welcome", true);
     if (this.state.articles.length === 0) {
       try {
         const articles = await api.getAllArticles(undefined, "votes");
