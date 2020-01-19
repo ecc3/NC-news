@@ -85,6 +85,7 @@ class ArticlesList extends Component {
       order,
       username
     } = this.state;
+
     if (loadErr) return <ErrDisplayer err={loadErr} />;
     return (
       <div className="route">

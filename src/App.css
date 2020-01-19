@@ -186,6 +186,7 @@ footer > * {
     "title extras"
     "created buttons";
   padding: 10px;
+  max-width: 858px;
   width: calc(100vw - 30vw - 48px);
 }
 
