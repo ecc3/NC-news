@@ -25,7 +25,6 @@ class App extends Component {
   };
 
   componentDidMount = () => {
-    console.log(this.props, "app props");
     if (localStorage.getItem("currentUser")) {
       const parsedUser = JSON.parse(localStorage.getItem("currentUser"));
       this.setState({ user: parsedUser });
@@ -47,7 +46,6 @@ class App extends Component {
   };
 
   hasLoaded = (component, bool = false) => {
-    console.log(`${component} has loaded`);
     this.setState({ [`${component}IsLoading`]: bool });
   };
 
